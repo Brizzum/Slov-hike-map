@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Hike Map Viewer</title> 
-    <!-- Link to the Manifest File -->
+    <title>Interactive Hike Map Viewer</title>
+
     <link rel="manifest" href="manifest.webmanifest">
-    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Leaflet CSS for map rendering -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -17,15 +15,21 @@
     <div class="container mx-auto p-4 md:p-8">
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="p-6 border-b border-gray-200">
-                <div class="flex justify-between items-center">
+                <div class="flex flex-wrap justify-between items-center gap-4">
                     <div>
                         <h1 class="text-2xl md:text-3xl font-bold text-gray-900">My Alpine Hike</h1>
                         <p class="mt-2 text-gray-600">An interactive map of the stages and huts.</p>
                     </div>
-                    <!-- Download Button -->
-                    <button id="downloadBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Download for Offline Use
-                    </button>
+                    <div class="flex gap-2">
+                        <!-- Location Button -->
+                        <button id="locationBtn" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-2 rounded">
+                            Show My Location
+                        </button>
+                        <!-- Download Button -->
+                        <button id="downloadBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Download for Offline Use
+                        </button>
+                    </div>
                 </div>
                  <!-- Status Message Area -->
                 <p id="statusMsg" class="mt-2 text-sm text-gray-500"></p>
