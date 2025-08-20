@@ -1,60 +1,39 @@
-// A unique name for our cache
-const CACHE_NAME = 'hike-map-cache-v1';
-
-// We need to import the data.js script to get access to the KML file URLs
-importScripts('data.js');
-
-// --- Files to Cache ---
-
-// 1. Get the KML file URLs from the data.js variable
-const kmlUrls = hikeStagesData.map(stage => stage.kml);
-
-// 2. Define the "app shell" - the core files your app needs to run
-const appShellFiles = [
-  '.',
-  'index.html',
-  'style.css',
-  'script.js',
-  'data.js',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
-  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/togeojson/0.16.0/togeojson.min.js'
-];
-
-// 3. Combine the app shell and the KML data into one list
-const urlsToCache = [...appShellFiles, ...kmlUrls];
-
-
-// --- Service Worker Event Listeners ---
+const CACHE_NAME = 'hike-map-cache-v3';
 
 // The 'install' event is fired when the service worker is first installed.
+// We now just ensure the service worker activates.
 self.addEventListener('install', event => {
   console.log('[Service Worker] Install');
-  // We wait until the cache is opened and all our files are cached.
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('[Service Worker] Caching all: app shell and data');
-        // If any of the files fail to cache, the service worker installation will fail.
-        return cache.addAll(urlsToCache);
-      })
-  );
+  // Skip waiting forces the waiting service worker to become the active service worker.
+  self.skipWaiting();
 });
 
-// The 'fetch' event is fired for every network request the page makes.
+// The 'activate' event is a good place to clean up old caches.
+self.addEventListener('activate', event => {
+  console.log('[Service Worker] Activate');
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('[Service Worker] Deleting old cache:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+  // Claiming the clients forces the browser to use this service worker for the current page.
+  return self.clients.claim();
+});
+
+// The 'fetch' event intercepts network requests.
 self.addEventListener('fetch', event => {
   event.respondWith(
-    // We look for a matching request in the cache first.
     caches.match(event.request)
       .then(response => {
-        if (response) {
-          // If we find a match in the cache, we return it.
-          console.log('[Service Worker] Returning from Cache:', event.request.url);
-          return response;
-        }
-        // If it's not in the cache, we let the browser fetch it from the network.
-        console.log('[Service Worker] Fetching from Network:', event.request.url);
-        return fetch(event.request);
+        // If we find a match in the cache, return it. Otherwise, fetch from the network.
+        return response || fetch(event.request);
       })
   );
 });
