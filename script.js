@@ -56,13 +56,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     locationBtn.addEventListener('click', () => {
         if (!isLocating) {
-            // Start locating
             map.locate({ watch: true, setView: true, maxZoom: 16 });
             locationBtn.textContent = 'Stop Tracking';
             statusMsg.textContent = 'Looking for your location...';
             isLocating = true;
         } else {
-            // Stop locating
             map.stopLocate();
             if (locationMarker) {
                 map.removeLayer(locationMarker);
@@ -76,12 +74,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
     map.on('locationfound', (e) => {
         statusMsg.textContent = 'Location found!';
+        const radius = e.accuracy / 2; // Optional: make radius represent accuracy
+
         if (!locationMarker) {
-            // Create the marker if it doesn't exist
-            locationMarker = L.marker(e.latlng).addTo(map)
-                .bindPopup("You are here.").openPopup();
+            // Create a new blue circle marker
+            locationMarker = L.circleMarker(e.latlng, {
+                radius: 8,
+                fillColor: "#1e90ff",
+                color: "#fff",
+                weight: 2,
+                opacity: 1,
+                fillOpacity: 0.7
+            }).addTo(map).bindPopup(`You are within ${radius.toFixed(0)} meters of this point`).openPopup();
         } else {
-            // Just update the position if it already exists
+            // Update the existing marker's position
             locationMarker.setLatLng(e.latlng);
         }
     });
@@ -94,7 +100,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // --- Process Hike Stages ---
-    const colors = ['#ff7800', '#3388ff', '#00e600', '#e60000', '#800080', '#ff00ff', '#ffff00', '#00ffff'];
     hikeStagesData.forEach((stage, index) => {
         fetch(stage.kml)
             .then(response => {
@@ -103,11 +108,30 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .then(kmlText => {
                 const geojson = toGeoJSON.kml(new DOMParser().parseFromString(kmlText, 'text/xml'));
-                const stageColor = colors[index % colors.length];
+                
+                // Determine color based on difficulty
+                let stageColor = '#3388ff'; // Default blue
+                if (stage.difficulty === 'Easy') {
+                    stageColor = '#00e600'; // Green
+                } else if (stage.difficulty === 'Difficult') {
+                    stageColor = '#ff7800'; // Orange
+                } else if (stage.difficulty === 'Very difficult') {
+                    stageColor = '#e60000'; // Red
+                }
+
                 const geoJsonLayer = L.geoJSON(geojson, {
                     style: () => ({ color: stageColor, weight: 4, opacity: 0.8 }),
                     onEachFeature: (feature, layer) => {
-                        layer.bindPopup(`<h3>${stage.name}</h3>... (details)`); // Abridged for brevity
+                        const popupContent = `
+                            <h3>${stage.name}</h3>
+                            <strong>Distance:</strong> ${stage.distance}<br>
+                            <strong>Time:</strong> ${stage.time}<br>
+                            <strong>Ascent:</strong> ${stage.ascent}<br>
+                            <strong>Descent:</strong> ${stage.descent}<br>
+                            <strong>Difficulty:</strong> ${stage.difficulty}<br>
+                            <strong>Ground Type:</strong> ${stage.groundType}
+                        `;
+                        layer.bindPopup(popupContent);
                     }
                 });
                 hikeLayers.addLayer(geoJsonLayer);
