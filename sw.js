@@ -1,14 +1,19 @@
-const CACHE_NAME = 'hike-map-cache-v3';
+const CACHE_NAME = 'hike-map-cache-v4'; // Version incremented to trigger update
 
-// The 'install' event is fired when the service worker is first installed.
-// We now just ensure the service worker activates.
+// The 'install' event is fired when a new service worker is installed.
 self.addEventListener('install', event => {
   console.log('[Service Worker] Install');
-  // Skip waiting forces the waiting service worker to become the active service worker.
-  self.skipWaiting();
+  // We no longer call self.skipWaiting() here to wait for user confirmation.
 });
 
-// The 'activate' event is a good place to clean up old caches.
+// This new listener waits for a message from the page to activate.
+self.addEventListener('message', event => {
+    if (event.data && event.data.action === 'skipWaiting') {
+        self.skipWaiting();
+    }
+});
+
+// The 'activate' event cleans up old caches.
 self.addEventListener('activate', event => {
   console.log('[Service Worker] Activate');
   event.waitUntil(
@@ -23,16 +28,14 @@ self.addEventListener('activate', event => {
       );
     })
   );
-  // Claiming the clients forces the browser to use this service worker for the current page.
   return self.clients.claim();
 });
 
-// The 'fetch' event intercepts network requests.
+// The 'fetch' event serves files from the cache.
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // If we find a match in the cache, return it. Otherwise, fetch from the network.
         return response || fetch(event.request);
       })
   );

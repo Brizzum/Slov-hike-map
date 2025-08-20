@@ -1,9 +1,29 @@
-// --- Service Worker Registration ---
+// --- Service Worker Registration & Update Logic ---
 if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-            .then(registration => console.log('Service Worker registered:', registration))
-            .catch(error => console.log('Service Worker registration failed:', error));
+    navigator.serviceWorker.register('sw.js')
+        .then(reg => {
+            reg.addEventListener('updatefound', () => {
+                const newWorker = reg.installing;
+                newWorker.addEventListener('statechange', () => {
+                    // When the new worker is installed, show the update prompt
+                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                        const updateNotification = document.getElementById('updateNotification');
+                        updateNotification.classList.remove('hidden');
+
+                        const updateBtn = document.getElementById('updateBtn');
+                        updateBtn.addEventListener('click', () => {
+                            newWorker.postMessage({ action: 'skipWaiting' });
+                        });
+                    }
+                });
+            });
+        })
+        .catch(error => console.log('Service Worker registration failed:', error));
+
+    // This event fires when the new service worker has taken control
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+        // Reload the page to use the new assets
+        window.location.reload();
     });
 }
 
@@ -15,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const downloadBtn = document.getElementById('downloadBtn');
     const locationBtn = document.getElementById('locationBtn');
     const statusMsg = document.getElementById('statusMsg');
-    const CACHE_NAME = 'hike-map-cache-v3';
+    const CACHE_NAME = 'hike-map-cache-v4'; // Match the new cache version
 
     // --- Download Button Logic ---
     downloadBtn.addEventListener('click', async () => {
@@ -74,20 +94,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     map.on('locationfound', (e) => {
         statusMsg.textContent = 'Location found!';
-        const radius = e.accuracy / 2; // Optional: make radius represent accuracy
+        const radius = e.accuracy / 2;
 
         if (!locationMarker) {
-            // Create a new blue circle marker
             locationMarker = L.circleMarker(e.latlng, {
-                radius: 8,
-                fillColor: "#1e90ff",
-                color: "#fff",
-                weight: 2,
-                opacity: 1,
-                fillOpacity: 0.7
+                radius: 8, fillColor: "#1e90ff", color: "#fff",
+                weight: 2, opacity: 1, fillOpacity: 0.7
             }).addTo(map).bindPopup(`You are within ${radius.toFixed(0)} meters of this point`).openPopup();
         } else {
-            // Update the existing marker's position
             locationMarker.setLatLng(e.latlng);
         }
     });
@@ -109,15 +123,10 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(kmlText => {
                 const geojson = toGeoJSON.kml(new DOMParser().parseFromString(kmlText, 'text/xml'));
                 
-                // Determine color based on difficulty
-                let stageColor = '#3388ff'; // Default blue
-                if (stage.difficulty === 'Easy') {
-                    stageColor = '#00e600'; // Green
-                } else if (stage.difficulty === 'Difficult') {
-                    stageColor = '#ff7800'; // Orange
-                } else if (stage.difficulty === 'Very difficult') {
-                    stageColor = '#e60000'; // Red
-                }
+                let stageColor = '#3388ff';
+                if (stage.difficulty === 'Easy') stageColor = '#00e600';
+                else if (stage.difficulty === 'Difficult') stageColor = '#ff7800';
+                else if (stage.difficulty === 'Very difficult') stageColor = '#e60000';
 
                 const geoJsonLayer = L.geoJSON(geojson, {
                     style: () => ({ color: stageColor, weight: 4, opacity: 0.8 }),
