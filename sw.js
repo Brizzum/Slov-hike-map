@@ -11,7 +11,7 @@ const kmlUrls = hikeStagesData.map(stage => stage.kml);
 
 // 2. Define the "app shell" - the core files your app needs to run
 const appShellFiles = [
-  '/',
+  '.',
   'index.html',
   'style.css',
   'script.js',
