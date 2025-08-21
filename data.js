@@ -1,109 +1,75 @@
 // --- Hike Data ---
 
-const hikeStagesData = [
+const mainStagesData = [
     {
         name: 'Stage 0:  Get to starting point', 
-        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/refs/heads/main/kml_slov/day0.kml', 
-        distance: '3,02 km',
-        time: '1 h 5 min',
-        ascent: '172 m',
-        descent: '26 m',
-        difficulty: 'Easy',
-        groundType: 'Path 80 %, Asphalt road 20 %'
+        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/main/kml_slov/day0.kml', 
+        distance: '3,02 km', time: '1 h 5 min', ascent: '172 m', descent: '26 m',
+        difficulty: 'Easy', groundType: 'Path 80 %, Asphalt road 20 %'
     },
-    
     { 
         name: 'Stage 1:  Valley Ascent', 
-        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/refs/heads/main/kml_slov/day1.kml', 
-        distance: '9,02 km',
-        time: '4 h 30 min',
-        ascent: '1.188 m',
-        descent: '56 m',
-        difficulty: 'Easy',
-        groundType: 'Path 56 %, Track 20 %, Forestry road 25 %'
+        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/main/kml_slov/day1.kml', 
+        distance: '9,02 km', time: '4 h 30 min', ascent: '1.188 m', descent: '56 m',
+        difficulty: 'Easy', groundType: 'Path 56 %, Track 20 %, Forestry road 25 %'
     },
-
     { 
         name: 'Stage 2: Ridge Traverse', 
-        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/refs/heads/main/kml_slov/day2.kml', 
-        distance: '3,61 km',
-        time: '2 h 30 min',
-        ascent: '703 m',
-        descent: '15 m',
-        difficulty: 'Difficult',
-        groundType: 'Path 100 %'
+        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/main/kml_slov/day2.kml', 
+        distance: '3,61 km', time: '2 h 30 min', ascent: '703 m', descent: '15 m',
+        difficulty: 'Difficult', groundType: 'Path 100 %'
     },
-
-
     { 
         name: 'Stage 3: Summit Push to Triglav', 
-        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/refs/heads/main/kml_slov/day3.kml', 
-        distance: '4,57 km',
-        time: '3 h 30 min',
-        ascent: '420 m',
-        descent: '785 m',
-        difficulty: 'Very difficult',
-        groundType: 'Path 63 %, Bad path 37 %'
+        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/main/kml_slov/day3.kml', 
+        distance: '4,57 km', time: '3 h 30 min', ascent: '420 m', descent: '785 m',
+        difficulty: 'Very difficult', groundType: 'Path 63 %, Bad path 37 %'
     },
-
-    
     { 
         name: 'Stage 4: Exit Triglav North face', 
-        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/refs/heads/main/kml_slov/day4.kml', 
-        distance: '9,03 km',
-        time: '5 h 30 min',
-        ascent: '944 m',
-        descent: '1.044 m',
-        difficulty: 'Very difficult',
-        groundType: 'Path 73 %, Bad path 27 %'
+        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/main/kml_slov/day4.kml', 
+        distance: '9,03 km', time: '5 h 30 min', ascent: '944 m', descent: '1.044 m',
+        difficulty: 'Very difficult', groundType: 'Path 73 %, Bad path 27 %'
     },
-
     { 
         name: 'Stage 5:  Valley descent', 
-        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/refs/heads/main/kml_slov/day5.kml', 
-        distance: '5,85 km',
-        time: '3 h 30 min',
-        ascent: '153 m',
-        descent: '1.208 m',
-        difficulty: 'Difficult',
-        groundType: 'Path 98 %, No data 2 %'
+        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/main/kml_slov/day5.kml', 
+        distance: '5,85 km', time: '3 h 30 min', ascent: '153 m', descent: '1.208 m',
+        difficulty: 'Difficult', groundType: 'Path 98 %, No data 2 %'
     },
-
-
     { 
         name: 'Stage 6:  Around the valley', 
-        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/refs/heads/main/kml_slov/day6.kml', 
-        distance: '14,89 km',
-        time: '5 h',
-        ascent: '357 m',
-        descent: '483 m',
-        difficulty: 'Easy',
-        groundType: 'Path 47 %, Track 10 %, Macadam road 14 %, Asphalt road 27 %, No data 2 %'
+        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/main/kml_slov/day6.kml', 
+        distance: '14,89 km', time: '5 h', ascent: '357 m', descent: '483 m',
+        difficulty: 'Easy', groundType: 'Path 47 %, Track 10 %, Macadam road 14 %, Asphalt road 27 %, No data 2 %'
     },
-
     { 
         name: 'Stage 7:  Up we go again', 
-        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/refs/heads/main/kml_slov/day7.kml', 
-        distance: '6,03 km',
-        time: '4 h 30 min',
-        ascent: '1.068 m',
-        descent: '304 m',
-        difficulty: 'Difficult',
-        groundType: 'Path 16 %, Bad path 44 %, Forestry road 39 %, Macadam road 1 %'
+        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/main/kml_slov/day7.kml', 
+        distance: '6,03 km', time: '4 h 30 min', ascent: '1.068 m', descent: '304 m',
+        difficulty: 'Difficult', groundType: 'Path 16 %, Bad path 44 %, Forestry road 39 %, Macadam road 1 %'
     },
-
     { 
         name: 'Stage 8:  Finishing trail ouw to the gorges', 
-        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/refs/heads/main/kml_slov/day8.kml', 
-        distance: '12,62 km',
-        time: '4 h 30 min',
-        ascent: '60 m',
-        descent: '1.046 m',
-        difficulty: 'Easy',
-        groundType: 'Path 56 %, Bad track 11 %, Forestry road 26 %, No data 7 %'
-    },    
+        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/main/kml_slov/day8.kml', 
+        distance: '12,62 km', time: '4 h 30 min', ascent: '60 m', descent: '1.046 m',
+        difficulty: 'Easy', groundType: 'Path 56 %, Bad track 11 %, Forestry road 26 %, No data 7 %'
+    },
+];
 
-
+const alternativeStagesData = [
+    { 
+        name: 'Alternative day 3:  No summit attempt', 
+        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/main/kml_slov/alternative_day3.kml', 
+        distance: '4,98 km', time: '2 h 15 min', ascent: '198 m', descent: '557 m',
+        difficulty: 'Difficult', groundType: 'Path 84 %, No data 16 %'
+    },
+    { 
+        name: 'Alternative day 4:  No via ferrata', 
+        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/main/kml_slov/alternative_day4.kml', 
+        distance: '16,56 km', time: '8 h', ascent: '1.343 m', descent: '1.442 m',
+        difficulty: 'Easy', groundType: 'Path 88 %, Bad path 1 %, Forestry road 11 %'
+    },
 ];
 
 const hutsData = [ 
@@ -115,4 +81,10 @@ const hutsData = [
     { name: 'Aljažev dom v Vratih', lat: 46.409402, lon: 13.843458 , alt: 1001},
     { name: 'Kovinarska koča v Krmi', lat: 46.400456, lon: 13.923667, alt: 869},
     { name: 'Blejska koča na Lipanci', lat: 46.375159, lon: 13.927598, alt: 1631}
+];
+
+const PointInterest = [
+    { name: 'Triglav Peak', lat: 46.3775, lon: 13.8472}, 
+    { name: 'Pokljuka gorge', lat: 46.378290, lon: 13.836668},
+    { name: 'lake Krisko jezero', lat: 46.398981, lon: 13.801665},
 ];
