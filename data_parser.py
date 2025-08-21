@@ -63,28 +63,30 @@ def create_js_object(name, kml_path, data_text):
 
 
 # 1. Provide the name and KML path for the new stage.
-stage_name = "Stage 5:  Valley descent"
-kml_file_path = "kml/day5.kml"
+stage_name = "Alternative day 4:  No via ferrata"
+kml_file_path = "aaaaa"
 
 # 2. Paste the data copied from the website here.
 input_text = """
 Distance:
-5,85 km
+16,56 km
 Approximate walking time:
-3 h 30 min
+8 h
 Approximate walking time back:
-4 h 30 min
+8 h
 Ascent:
-153 m
+1.343 m
 Descent:
-1.208 m
+1.442 m
 Difficulty:
-Difficult
+Easy
 Type:
-Mountain trail 100 %
+Mountain trail 96 %
+Unmarked 4 %
 Type of ground:
-Path 98 %
-No data 2 %
+Path 88 %
+Bad path 1 %
+Forestry road 11 %
 """
 
 # 3. Generate the JavaScript object.

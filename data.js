@@ -103,6 +103,28 @@ const hikeStagesData = [
         groundType: 'Path 56 %, Bad track 11 %, Forestry road 26 %, No data 7 %'
     },    
 
+    { 
+        name: 'Alternative day 3:  No summit attempt', 
+        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/refs/heads/main/kml_slov/alternative_day3.kml', 
+        distance: '4,98 km',
+        time: '2 h 15 min',
+        ascent: '198 m',
+        descent: '557 m',
+        difficulty: 'Difficult',
+        groundType: 'Path 84 %, No data 16 %'
+    },
+
+    { 
+        name: 'Alternative day 4:  No via ferrata', 
+        kml: 'https://raw.githubusercontent.com/Brizzum/kml_data_repo/refs/heads/main/kml_slov/alternative_day4.kml', 
+        distance: '16,56 km',
+        time: '8 h',
+        ascent: '1.343 m',
+        descent: '1.442 m',
+        difficulty: 'Easy',
+        groundType: 'Path 88 %, Bad path 1 %, Forestry road 11 %'
+    },
+
 
 ];
 
@@ -115,4 +137,10 @@ const hutsData = [
     { name: 'Aljažev dom v Vratih', lat: 46.409402, lon: 13.843458 , alt: 1001},
     { name: 'Kovinarska koča v Krmi', lat: 46.400456, lon: 13.923667, alt: 869},
     { name: 'Blejska koča na Lipanci', lat: 46.375159, lon: 13.927598, alt: 1631}
+];
+
+const PointInterest = [
+{ name: 'Triglav Peak', lat: 46.3775, lon: 13.8472}, 
+{ name: 'Pokljuka gorge', lat: 46.378290, lon: 13.836668},
+{name: 'lake Krisko jezero', lat: 46.398981, lon: 13.801665},
 ];
