@@ -140,7 +140,7 @@ const hutsData = [
 ];
 
 const PointInterest = [
-{ name: 'Triglav Peak', lat: 46.3775, lon: 13.8472}, 
-{ name: 'Pokljuka gorge', lat: 46.378290, lon: 13.836668},
-{name: 'lake Krisko jezero', lat: 46.398981, lon: 13.801665},
+    { name: 'Triglav Peak', lat: 46.3775, lon: 13.8472}, 
+    { name: 'Pokljuka gorge', lat: 46.378290, lon: 13.836668},
+    { name: 'lake Krisko jezero', lat: 46.398981, lon: 13.801665},
 ];

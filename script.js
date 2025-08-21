@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // --- Map Initialization ---
     const map = L.map('map').setView([46.378858, 13.848988], 10);
-    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         attribution: 'Tiles &copy; Esri'
     }).addTo(map);
 
@@ -158,11 +158,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // --- Layer Control ---
+    const baseMaps = {
+        "Satellite": satelliteLayer
+    };
     const overlayMaps = {
         "Hike Stages": hikeLayers,
         "Alternative Paths": alternativeLayers,
         "Huts": hutLayers,
         "Points of Interest": poiLayers
     };
-    L.control.layers({"Satellite": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}')}, overlayMaps).addTo(map);
+    L.control.layers(baseMaps, overlayMaps).addTo(map);
 });
